@@ -14,11 +14,16 @@ from . import acl
 app = Flask(__name__)
 
 
+
+
 def create_app():
     app.config.from_object("funlab.default_settings")
     app.config.from_envvar("FUNLAB_SETTINGS", silent=True)
     config = dotenv_values(".env")
     app.config.update(config)
+
+
+
 
     models.init_db(app)
     views.register_blueprint(app)
@@ -73,7 +78,10 @@ def get_program_options(default_host="127.0.0.1", default_port="8080"):
         help=optparse.SUPPRESS_HELP,
     )
 
+
     options, _ = parser.parse_args()
+    # options.debug = app.debug
+
 
     # If the user selects the profiling option, then we need
     # to do a little extra setup
